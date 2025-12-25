@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Playful Login – Lottie + Eye Tracking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      background: linear-gradient(120deg, #f6f9ff, #e9f0ff);
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+    }
+
+    /* LEFT SIDE */
+    .left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .character {
+      width: 180px;
+    }
+
+    /* RIGHT SIDE */
+    .right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 40px;
+      width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #4361ee;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #3a56d4;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .left { height: 40vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- LEFT: LOTTIE CHARACTERS -->
+    <div class="left">
+      <!-- Idle / Eye-tracking animation -->
+      <lottie-player
+        id="charIdle"
+        class="character"
+        src="https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json"
+        background="transparent"
+        speed="1"
+        loop
+        autoplay>
+      </lottie-player>
+
+      <!-- Cover-eyes animation -->
+      <lottie-player
+        id="charCover"
+        class="character"
+        src="https://assets1.lottiefiles.com/packages/lf20_q5pk6p1k.json"
+        background="transparent"
+        speed="1"
+        loop
+        style="display:none">
+      </lottie-player>
+    </div>
+
+    <!-- RIGHT: LOGIN -->
+    <div class="right">
+      <div class="login-box">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="login()">Sign In</button>
+        <div class="error" id="error">Wrong password</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const idle = document.getElementById('charIdle');
+    const cover = document.getElementById('charCover');
+    const passwordInput = document.getElementById('password');
+    const error = document.getElementById('error');
+
+    /* EYE TRACKING (cursor-based rotation illusion) */
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      idle.style.transform = `rotateX(${ -y }deg) rotateY(${ x }deg)`;
+    });
+
+    /* PASSWORD FOCUS → COVER EYES */
+    passwordInput.addEventListener('focus', () => {
+      idle.style.display = 'none';
+      cover.style.display = 'block';
+      cover.play();
+    });
+
+    passwordInput.addEventListener('blur', () => {
+      cover.style.display = 'none';
+      idle.style.display = 'block';
+      idle.play();
+    });
+
+    function login() {
+      if (passwordInput.value !== 'admin123') {
+        error.style.display = 'block';
+        idle.setDirection(-1);
+        idle.play();
+      } else {
+        error.style.display = 'none';
+        alert('Login successful!');
+      }
+    }
+  </script>
+
+</body>
+</html>
