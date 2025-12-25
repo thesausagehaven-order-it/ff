@@ -2,98 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Playful Login – REAL Eye Tracking + Lottie</title>
+  <title>Delightful Secure Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Lottie -->
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
   <style>
-    * { box-sizing: border-box; font-family: Arial, sans-serif; }
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      background: linear-gradient(120deg, #f6f9ff, #e9f0ff);
+    :root {
+      --primary: #4361ee;
+      --bg: #f4f7ff;
     }
 
-    .container { display: flex; width: 100%; }
+    * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-    /* LEFT SIDE */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      background: linear-gradient(135deg, #eef2ff, #fdfcff);
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
+
+    /* LEFT – CHARACTER */
     .left {
-      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 40px;
       position: relative;
+      background: radial-gradient(circle at center, #ffffff, var(--bg));
     }
 
     .character-wrapper {
       position: relative;
-      width: 200px;
+      width: 260px;
+    }
+
+    lottie-player {
+      width: 100%;
     }
 
     /* SVG EYES */
-    .eyes-svg {
+    .eyes {
       position: absolute;
-      top: 55px;
+      top: 88px;
       left: 50%;
       transform: translateX(-50%);
-      width: 140px;
+      width: 170px;
       pointer-events: none;
     }
 
     .pupil {
-      transition: transform 0.05s linear;
+      transition: transform 0.06s linear;
     }
 
-    /* RIGHT SIDE */
+    /* RIGHT – LOGIN */
     .right {
-      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .login-box {
-      background: #fff;
-      padding: 40px;
-      width: 320px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 360px;
+      background: white;
+      padding: 42px;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     }
 
-    .login-box h2 { text-align: center; margin-bottom: 20px; }
+    .login-box h2 {
+      margin: 0 0 10px;
+      text-align: center;
+    }
+
+    .login-box p {
+      margin: 0 0 25px;
+      text-align: center;
+      color: #666;
+    }
 
     .login-box input {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+      border-radius: 10px;
       border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .login-box input:focus {
+      outline: none;
+      border-color: var(--primary);
     }
 
     .login-box button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
+      border-radius: 10px;
       border: none;
-      border-radius: 8px;
-      background: #4361ee;
-      color: #fff;
+      background: var(--primary);
+      color: white;
+      font-size: 16px;
       cursor: pointer;
     }
 
+    .login-box button:hover { background: #364fc7; }
+
     .error {
-      color: red;
+      margin-top: 14px;
+      color: #d90429;
       text-align: center;
-      margin-top: 10px;
       display: none;
     }
 
-    @media (max-width: 768px) {
-      .container { flex-direction: column; }
-      .left { height: 40vh; }
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+      .left { height: 45vh; }
     }
   </style>
 </head>
@@ -101,14 +131,13 @@
 
 <div class="container">
 
-  <!-- LEFT: CHARACTER -->
+  <!-- LEFT -->
   <div class="left">
-
     <div class="character-wrapper" id="character">
 
       <!-- LOTTIE BODY -->
       <lottie-player
-        id="body"
+        id="lottieBody"
         src="https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json"
         background="transparent"
         speed="1"
@@ -116,27 +145,26 @@
         autoplay>
       </lottie-player>
 
-      <!-- SVG EYES (REAL TRACKING) -->
-      <svg class="eyes-svg" viewBox="0 0 200 60">
-        <ellipse cx="60" cy="30" rx="28" ry="20" fill="#fff" />
-        <ellipse cx="140" cy="30" rx="28" ry="20" fill="#fff" />
-
-        <circle id="pupilLeft" class="pupil" cx="60" cy="30" r="8" fill="#000" />
-        <circle id="pupilRight" class="pupil" cx="140" cy="30" r="8" fill="#000" />
+      <!-- SVG EYES -->
+      <svg class="eyes" viewBox="0 0 200 60">
+        <ellipse cx="60" cy="30" rx="30" ry="20" fill="#fff" />
+        <ellipse cx="140" cy="30" rx="30" ry="20" fill="#fff" />
+        <circle id="pupilL" class="pupil" cx="60" cy="30" r="8" />
+        <circle id="pupilR" class="pupil" cx="140" cy="30" r="8" />
       </svg>
 
     </div>
-
   </div>
 
-  <!-- RIGHT: LOGIN -->
+  <!-- RIGHT -->
   <div class="right">
     <div class="login-box">
-      <h2>Login</h2>
+      <h2>Welcome Back</h2>
+      <p>We’ll keep your password private 👀</p>
       <input type="text" placeholder="Username" />
       <input type="password" id="password" placeholder="Password" />
       <button onclick="login()">Sign In</button>
-      <div class="error" id="error">Wrong password</div>
+      <div class="error" id="error">Incorrect password</div>
     </div>
   </div>
 
@@ -144,53 +172,51 @@
 
 <script>
   const character = document.getElementById('character');
-  const pupilL = document.getElementById('pupilLeft');
-  const pupilR = document.getElementById('pupilRight');
+  const pupilL = document.getElementById('pupilL');
+  const pupilR = document.getElementById('pupilR');
   const password = document.getElementById('password');
   const error = document.getElementById('error');
 
-  let eyesEnabled = true;
+  let tracking = true;
 
   document.addEventListener('mousemove', (e) => {
-    if (!eyesEnabled) return;
+    if (!tracking) return;
 
     const rect = character.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
-    const cy = rect.top + 90;
+    const cy = rect.top + 110;
 
     const dx = e.clientX - cx;
     const dy = e.clientY - cy;
 
-    const max = 8;
-    const angleX = Math.max(Math.min(dx / 20, max), -max);
-    const angleY = Math.max(Math.min(dy / 20, max), -max);
+    const limit = 9;
+    const moveX = Math.max(Math.min(dx / 18, limit), -limit);
+    const moveY = Math.max(Math.min(dy / 18, limit), -limit);
 
-    pupilL.style.transform = `translate(${angleX}px, ${angleY}px)`;
-    pupilR.style.transform = `translate(${angleX}px, ${angleY}px)`;
+    pupilL.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    pupilR.style.transform = `translate(${moveX}px, ${moveY}px)`;
   });
 
   password.addEventListener('focus', () => {
-    eyesEnabled = false;
-    pupilL.style.transform = 'translate(0, 12px)';
-    pupilR.style.transform = 'translate(0, 12px)';
+    tracking = false;
+    pupilL.style.transform = 'translate(0, 14px)';
+    pupilR.style.transform = 'translate(0, 14px)';
   });
 
-  password.addEventListener('blur', () => {
-    eyesEnabled = true;
-  });
+  password.addEventListener('blur', () => tracking = true);
 
   function login() {
     if (password.value !== 'admin123') {
       error.style.display = 'block';
       character.animate([
         { transform: 'translateX(0)' },
-        { transform: 'translateX(-8px)' },
-        { transform: 'translateX(8px)' },
+        { transform: 'translateX(-10px)' },
+        { transform: 'translateX(10px)' },
         { transform: 'translateX(0)' }
-      ], { duration: 400 });
+      ], { duration: 420 });
     } else {
       error.style.display = 'none';
-      alert('Login successful!');
+      alert('Login successful');
     }
   }
 </script>
